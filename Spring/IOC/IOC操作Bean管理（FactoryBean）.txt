@@ -1,0 +1,63 @@
+IOC操作Bean管理（FactoryBean）
+
+1.Spring有两种类型bean，一种普通bean，另外一种工厂bean（Factory Bean）
+
+2.普通bean：在配置文件中定义bean类型就是返回类型
+
+3.工厂bean：在配置文件定义bean类型可以和返回类型不一样
+	第一步：创建类，让这个类作为工厂bean，实现接口FactoryBean
+	第二步：实现接口里面的方法，在实现的方法中定义返回的bean类型
+
+
+
+IOC操作Bean管理（bean作用域）
+	1.在Spring里面，设置创建bean实例是单实例还是多实例
+	2.在Spring里面，默认情况下，bean是单实例对象 （自己创建的bean对象sout发现地址都一致）
+	
+	3.如何设置单例还是多实例
+		（1）在Spring配置文件bean标签里面有属性（Scope）用于设置单例还是多实例
+		（2）Scope属性值
+			第一个值为默认值，singleton，表示单实例对象
+			第二个值prototype，表示多实例对象
+
+		（3）singleton和prototype区别
+			第一	singleton单实例，prototype多实例
+			
+			第二	设置scope值是singleton时候，加载Spring配置文件时候就会创建单实例对象
+				设置scope值是prototype时候，不是在加载Spring配置文件时候就会创建对象，在调用getBean方法时候创					建多实例对象
+
+
+IOC操作Bean管理（生命周期）
+	1.生命周期
+	（1）从对象创建到对象销毁的过程
+	
+	2.bean的生命周期
+	（1）通过构造器创建bean实例（无参构造）
+	（2）为bean的属性设置值和对其他bean引用（调用set方法）
+	（3）调用bean的初始化方法（需要进行配置）（在bean标签里面调用init-Method方法）
+	（4）bean可以使用了（对象获取到了）
+	（5）当容器关闭时候，调用bean的销毁方法（需要进行配置销毁的方法）（在bean标签里面调用destroy-Method方法）
+
+
+
+
+3.演示bean生命周期
+	第一步为设置空参构造器
+	第二步为调用set方法设置属性值
+	第三步执行初始化方法（执行init方法）
+	第四步获取创建bean实例对象（getbean方法）
+	第五步执行销毁的方法（执行destory方法）
+
+4.bean的后置处理器，bean的生命周期有七步（实现BeanPostProcessor接口）
+	（1）为设置空参构造器
+	（2）为调用set方法设置属性值
+	*（3）把bean实例传递bean后置处理器方法（方法是postProcessBeforeInitialzation）
+	（4）执行初始化方法（执行init方法）
+	*（5）把bean实例传递bean后置处理器方法（方法是postProcessAfterInitialization）
+	（6）获取创建bean实例对象（getbean方法）
+	（7）当容器关闭时候，调用bean的销毁的方法（执行destory方法）
+
+
+
+5，后置处理器
+	（1）创建类，实现接口BeanPostProcessor，创建后置处理器

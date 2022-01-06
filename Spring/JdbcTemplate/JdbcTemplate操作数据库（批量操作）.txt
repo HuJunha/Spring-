@@ -1,0 +1,63 @@
+JdbcTemplate操作数据库（批量操作）
+
+1.批量操作：操作表里面多条记录
+
+
+2.JdbcTemplate实现批量添加操作
+	JdbcTemplate中的batchUpdate（String sql，List<Object [ ]>batchArgs）
+		第一个参数：sql语句
+		第二个参数：List集合，添加多条记录数据
+
+代码如下：
+public void bathupdate(List<Object[]> objects) {
+        String sql = "insert into t_book values(?,?,?,?)";
+        int[] ints = jdbcTemplate.batchUpdate(sql, objects);
+        System.out.println(Arrays.toString(ints));
+    }
+
+在main方法中要自定义相应字段的实例
+
+如：
+ List<Object[]> list = new ArrayList<>();
+        Object[] o1 ={3,"chinese","中国",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())};
+
+注：数组中的内容要与数据库的字段类型相匹配
+
+3.JdbcTemplate实现批量修改操作
+	JdbcTemplate中的batchUpdate（String sql，List<Object [ ]>batchArgs）
+		第一个参数：sql语句
+		第二个参数：List集合，添加多条记录数据
+
+
+代码如下：
+	  public void bathUpdate(List<Object[]> objects) {
+        String sql = "update t_book set bookname=?,bookCountry=?,bookTime=? where bookId=?";
+        int[] ints = jdbcTemplate.batchUpdate(sql, objects);
+        System.out.println(Arrays.toString(ints));
+    }
+在main方法中要自定义相应字段的实例
+
+如：
+ List<Object[]> list = new ArrayList<>();
+        Object[] o1 ={"chinese","中国",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())};
+
+注：数组中的内容要与sql语句字段相匹配
+
+4.JdbcTemplate实现批量删除操作
+	JdbcTemplate中的batchUpdate（String sql，List<Object[ ]>batchArgs）
+		第一个参数：sql语句
+		第二个参数：List集合，删除多条记录的数据
+
+代码如下：
+	public void bathDelete(List<Object[]> objects) {
+        String sql = "delete  from t_book where bookId=? ";
+        int[] ints = jdbcTemplate.batchUpdate(sql, objects);
+        System.out.println(Arrays.toString(ints));
+    }
+
+在main方法中要自定义相应字段的实例
+如：
+	List<Object []> list = new ArrayList<>();
+        	Object[] o1 ={4};
+
+注：数组中的数字即表中的id

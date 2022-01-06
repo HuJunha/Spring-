@@ -1,0 +1,53 @@
+JdbcTemplate操作数据库（查询操作）
+
+JdbcTemplate操作数据库（ 查询返回某个值）
+	1.查询表里面有多少条记录，返回是某个值
+	
+
+	2.使用JdbcTemplate实现查询返回某个值代码
+		String sql = “select count（*） from  表名”
+		调用JdbcTemplate中的queryForObject（String sql，Class<T> requiredType）方法
+			第一个参数：sql语句
+			第二个参数：返回类型的Class（如int类型则为Integer.class)
+
+代码如下：
+public int count() {
+        String sql ="select count(*) from t_clothes";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class);
+        return count;
+    }
+
+
+
+JdbcTemplate操作数据库（查询返回对象）
+	1.场景：查询图书（商品）详情
+	
+	2.JdbcTemplate实现查询返回对象
+		String sql = “select * from 表名 where  表中id的字段=?”
+		调用JdbcTemplate中的queryForObject（String sql，RowMapper，Object...args）方法
+			第一个参数：sql语句
+			第二个参数：RowMapper，是接口，返回不同类型的数据，使用这个接口里面实现类完成了数据的封装
+			第三个参数：sql语句值（id）
+
+代码如下：
+public Clothes fineone(int clothesId) {
+        String sql ="select * from t_clothes where clothesId=?";
+        Clothes clothes = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Clothes>(Clothes.class), clothesId);
+        return  clothes;
+    }
+
+
+JdbcTemplate操作数据库（查询返回集合）
+	1.场景：查询图书列表的分页..
+	2.调用JdbcTemplate方法实现查询返回集合
+		String sql =“select * from 表名”;
+		调用JdbcTemplate中的query（String sql，RowMapper<T> rowMapper,Object...args）
+			第一个参数：sql语句
+			第二个参数：RowMapper是接口，针对返回不同类型数据，使用这个接口里面实现类完成数据封装
+			第三个参数：sql语句值
+
+public void fineAll() {
+        String sql = "select * from t_clothes";
+        List<Clothes> query = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Clothes>(Clothes.class));
+        System.out.println(query);
+    }

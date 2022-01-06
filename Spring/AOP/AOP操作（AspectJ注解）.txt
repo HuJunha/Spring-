@@ -1,0 +1,42 @@
+AOP操作（AspectJ注解）
+
+1.创建类，在类里面定义方法
+
+2.创建增强类（编写增强的逻辑）
+	1.在增强类里面，创建方法，让不同的方法代表代表不同的通知类型。
+
+3.进行通知的配置
+	1.在Spring配置文件中，开启注解的扫描
+		在xml配置文件或者自己创建的配置文件创建环境，添加注解扫描
+
+	2.使用注解创建user和userproxy对象
+		在两个类的头部添加@Component注解
+	3.在增强类上面添加注解@Aspect
+	4.在Spring配置文件中开启生成代理对象
+		<aop:aspect j-autoproxy><aop:aspectj-autoproxy>
+
+
+4.配置不同类型的通知
+	1.在增强类的里面，若作为通知方法上面添加通知类型注解，使用切入点表达式配置
+	前置通知：@Before
+	最终通知：@After
+	后置通知：@AfterReturning
+	异常通知：@AfterThrowing
+	环绕通知：@Around(在环绕之前和环绕之后中间要添加proceedingJoinPoint.Proceed（）方法//该代码是被增强的方法)
+
+5.相同切入点抽取
+	//相同切入点可以抽取出来
+	@Pointcut（value =“execution（* 包名.类名.方法名（...））”）
+	public void pointdemo（）{
+}
+	通知则可以改成：@before（value=“pointdemo（）”）
+
+6.有多个增强类对同一个方法进行增强，设置增强类优先级
+	（1）在增强类上面添加注解@Order（数字类型值），数字类型越小优先级越高
+
+
+7.完全注解开发
+	（1）创建配置类，不需要创建xml配置文件
+	@Configuration（）
+	@ComponentScan（basePackages ={“需要扫描的文件”}）
+	@EnableAspectJAutoProxy（proxyTargetClass =true）

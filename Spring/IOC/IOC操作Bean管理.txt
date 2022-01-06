@@ -1,0 +1,80 @@
+IOC操作Bean管理
+	1.什么是Bean管理
+	Bean管理指的是两个操作
+		1.Spring创建对象
+			
+		2Spring注入属性
+
+	2.Bean管理操作有两种方式
+		1.基于xml配置文件方式实现
+		2.基于注解方式实现
+
+
+IOC操作Bean管理（基于xml方式）
+	1.基于xml方式创建对象
+		1.在Spring配置文件中，使用bean标签，标签里面添加对应的属性，就可以实现对象创建
+		2.在bean标签有很多的属性，介绍常用的属性
+			id属性：唯一标识
+			class属性：类全路径（包路径）
+			name属性：与id功能一致，可以有特殊符号
+		3.创建对象时候，默认执行无参数的构造方法
+	
+
+
+	2.基于xml方式注入属性
+		1.DI:依赖注入，就是注入属性
+	3.第一种注入方式，就是用set方法进行注入
+		JavaSE中的set方法注入
+	
+		使用Spring配置文件的注入：使用<property>标签
+		
+	4.第二种注入方式，就是用参数构造方法注入
+		<Constructor-arg>标签
+
+	5.p名称空间注入（了解）
+		1.使用p名称空间注入，可以简化基于xml配置方式
+			第一步：添加p名称空间在配置文件中
+				xmlns：p=“xmls后面的/beans改为/p”
+			第二步：进行属性注入，在bean标签里面进行操作
+				<bean id=""  class=""   p:属性=“”></bean>
+
+IOC操作Bean管理（xml注入其他类型属性）
+	1.字面量
+		（1）null值
+			<property  name="属性">
+				<null/>
+			</property>
+		
+		
+
+		（2）属性包含特殊符号
+			1.把特殊符号进行转义
+			2.把带特殊符号内容写到CDATA
+				<![CDATA[特殊符号]]>
+
+	2.注入属性-外部bean
+		1.创建两个类，server类和dao类
+		2.在serve类调用dao里面的方法
+		3.在spring配置文件中进行配置
+			创建server和dao的bean标签
+			在server的bean标签中加入<property name="server表中的属性" ref=“dao的bean标签的id”>			
+
+
+	3.注入属性，内部bean
+		//内部bean	
+		情景：员工employee与部门department
+		在员工类中引入对象属性department  department；
+		在配置文件中员工bean里面，设置对象类型属性
+		<bean id ="" class="employee">
+			//注入员工类里面基本属性
+			<property>
+			<property name="department">
+				<bean id="" class="department">
+				//注入部门表的基本属性
+				<property>
+				</bean>
+
+	4.注入属性，级联赋值
+		1.第一种写法：外部bean注入
+		2.第二种写法：在外部bean注入方法中，下面添加<property="类.属性" value=“具体值”>标签，需要在员工类中有引用属性的get方法
+				</bean>		

@@ -1,0 +1,47 @@
+Spring连接数据库的方法（总结）
+
+都是运用JdbcTemplate的方法
+
+//添加
+ String sql="insert into 表名 values（对应数据库参数个数的？）"
+JdbcTemplate.update(sql,Object...args)
+
+//修改
+JdbcTemplate.update(sql,id)
+ String sql = "update 表名 set 相应的参数（如：username=？）where 表相应id的字段=？"
+
+//删除
+JdbcTemplate.update（sql，id）；
+String sql =" delete from 表名 where  表相应id的字段=？"
+
+
+//查询表中记录个数
+JdbcTemplate.queryForObject(sql,Integer.class);
+String sql ="select count(*) from 表名";
+
+//查询表中某一个记录详细信息
+JdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<相应字段的java类>(相应字段的java类.class),id)
+ String sql = “select * from 表名 where 表相应id的字段=？”
+ 
+//查询表中所有详细记录用集合表示出来
+JdbcTemplate.query（sql，new BeanPropertyRowMapper<相应字段的java类>(相应字段的java类.class)）
+String sql= "select * from  相应的表"
+
+//批量添加记录（注意：数组里的信息要与数据库字段相匹配）
+JdbcTemplate.BatchUpdate（sql，List<Object[]> objects）
+ String sql =“insert into 相应的表 values（相应字段个数的？）”
+注意：
+	在main方法中，数组添加数据的顺序要与数据库表相一致
+
+//批量修改记录
+JdbcTemplate.BatchUpdate(sql,List<Object[ ]>object)
+String sql="update 表名 set 相应的字段 where 相应表的id的字段=?";
+注意：
+	在main方法中，数组添加数据的顺序要与sql语句字段顺序一致
+
+//批量删除记录
+JdbcTemplate.BatchUpdate(sql,List<Object[ ]>object)
+String sql = "delete from 表名 where 表中相应id的字段=？"
+
+注意：
+	在main方法中，数组只需填上相应id的值即可

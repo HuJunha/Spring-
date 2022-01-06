@@ -1,0 +1,28 @@
+JdbcTemplate操作数据库（添加）
+
+1.对应数据库创建实体
+	创建与t_user字段相应的类
+
+2.编写service和dao
+	（1）在dao进行数据库添加操作
+	（2）调用JdbcTemplate对象里面update方法实现添加操作
+		update（String sql，Object ...args）
+		有两个参数：
+		第一个参数：sql语句
+		第二个参数：可变参数，设置sql语句值
+
+//添加代码
+	 //创建jdbcTemplate的实例
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    @Override
+    public void add(Clothes clothes) {
+        String sql = "insert into t_clothes values(?,?,?)";
+        Object[] args={clothes.getClothesname(),clothes.getClothesId(),clothes.getClothesTime()};
+        int update = jdbcTemplate.update(sql, args);
+        System.out.println(update);
+    }
+
+
+注意：
+	Object【】args={参数}；里的参数顺序要与数据库表中字段顺序一致

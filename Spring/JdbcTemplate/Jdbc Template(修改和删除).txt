@@ -1,0 +1,23 @@
+JdbcTemplate（修改和删除）
+
+//删除方法的代码
+
+ public void delete(String clothesId) {
+        String sql = "delete from t_clothes where clothesId=?";
+        int update = jdbcTemplate.update(sql, clothesId);
+        System.out.println(update);
+
+    }
+
+
+//修改方法的代码
+
+ public void update(Clothes clothes) {
+        String sql = "update  t_clothes set clothesname=? , clothesTime=? where clothesid=? ";
+        Object[] args={clothes.getClothesname(),clothes.getClothesTime(),clothes.getClothesId()};
+        int update = jdbcTemplate.update(sql, args);
+        System.out.println(update);
+    }
+}
+
+注意：修改方法的Object【】args={参数}中的参数顺序要与sql语句中修改的参数语句顺序对应，且删除，修改，添加都用update方法

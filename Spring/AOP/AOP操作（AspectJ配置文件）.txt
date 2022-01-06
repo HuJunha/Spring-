@@ -1,0 +1,22 @@
+AOP操作（AspectJ配置文件）
+
+1.创建两个类，增强类和被增强类，创建方法
+
+2.在Spring配置文件中创建两个类的对象
+先用bean创建两个类的对象
+
+3.在Spring配置文件中配置切入点
+//配置aop的增强
+<aop:config>
+
+//配置切入点
+<aop:pointcut id ="随便的名字" expression= “execution.包名.类名.方法名（..）”
+
+
+//配置切面
+<aop:aspect  ref="增强类">
+	<aop:before method=“before” pointcut-ref=“对应的随便的名字”/>
+</aop:aspect>
+</aop:config>
+
+

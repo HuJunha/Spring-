@@ -1,0 +1,22 @@
+JDK动态代理的体现
+
+1.调用newProxyInstance方法
+
+static Object newProxyInstance(ClassLoader loader,类<?> interfaces,InvocationHandler h)
+方法有三个参数：
+	第一个参数：类加载器
+	第二个参数：增强方法所在的类，这个类实现的接口，支持多个接口
+	第三参数：实现这个接口InvocationHandler，创建代理对象，写增强的部分
+
+
+2.编写JDK动态代理代码
+	（1）创建接口，定义方法
+		即创建接口（test）
+	（2）创建接口，实现接口的实现类
+		即创建实现类（testImplete）
+	（3）使用proxy类创建接口代理对象
+		注：
+			与javaSE的动态代理挺相像，但是接口的话需要自己定义，即
+			Class 【】interface ={接口名.class},还有proxy.instance方法也有所不同，为
+			proxy.newInstance(调用当前类的对象.class.getClassLoader(),interface,handler(testImplete))，
+	（4）创建代理类实现Invocation，实现相应的方法，记得调用method.invoke方法

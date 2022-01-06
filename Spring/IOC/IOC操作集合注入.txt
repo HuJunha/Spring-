@@ -1,0 +1,31 @@
+IOC操作集合注入（xml注入集合属性）
+
+	1.注入数组类型属性
+	在<property>标签下添加<Arrays>标签	
+
+	2.注入list集合类型属性
+	在<property>标签下添加<List>标签	
+
+	3.注入map集合类型属性
+	在<property>标签下添加<Map>标签	
+
+	4.注入Set集合类型属性
+	在<property>标签下添加<Set>标签	
+
+
+
+	5.在集合里面设置其他对象类型值
+	在外部生成对应对象的bean标签，注入其对象的属性值，
+	在需要导入<propety>标签的类型标签下使用<ref  bean=“外部bean标签id值”>标签
+		 
+	6.把集合注入部分提取出来
+	（1）在Spring配置文件中引入名称空间util
+	         在xmlns:p名称空间下复制xmlns:p空间名称，并把空间中p改为util
+	         xsi名称空间引用地址复制一遍，加入当前xsi空间名称引用地址后面，把beans都改为util
+
+	（2）使用util标签完成list集合注入
+		<util:XXX 		id="自定义属性">
+			<property>标签
+	
+		对应类的bean 标签下
+		<property  name=" "   ref="util标签的自定义属性">

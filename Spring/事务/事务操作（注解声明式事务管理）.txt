@@ -1,0 +1,17 @@
+事务操作（注解声明式事务管理）
+
+1.在Spring：配置文件配置事务管理器
+	1.在xml文件中创建事务管理器对象
+		<bean id ="transactionManager"	class ="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!--注入数据源-->
+		<property name="dataSource"	ref= "dataSource"><property></bean>
+
+	2.在Spring配置文件中，开始事务注解
+		（1）在Spring配置文件引入名称空间tx（即与扫描context一样需要配置）
+		（2）开启事务注解
+			<tx:annotation-driven transaction-manager ="transactionManager"></tx:annotation-driven>
+
+	3.在service类上面（获取service类里面方法上面）添加事务注解
+		（1）:@Transactional，这个注解添加到类上面，也可以添加方法上面
+		（2）：如果把这个注解添加类上面，这个类里面所有的方法都添加事务
+		（3）：如果把这个注解添加到方法上面，为这个方法添加事务
